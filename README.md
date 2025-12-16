@@ -1,14 +1,12 @@
-# Reference Client: Realtime API (beta)
+# Realtime API Wrapper - Provider-Agnostic Client
 
-This repository contains a reference client aka sample library for connecting
-to OpenAI's Realtime API.
-**This library is in beta and should not be treated as a final implementation.**
-You can use it to easily prototype conversational apps.
+This repository contains a **provider-agnostic** wrapper for connecting to realtime AI APIs,
+including OpenAI's Realtime API, Google Gemini Live API, and custom relay servers.
 
-**The easiest way to get playing with the API right away** is to use the
-[**Realtime Console**](https://github.com/openai/openai-realtime-console), it uses
-the reference client to deliver a fully-functional API inspector with examples
-of voice visualization and more.
+**Originally based on OpenAI's reference client**, this library has been enhanced to support
+multiple AI providers while maintaining full backward compatibility.
+
+You can use it to easily prototype conversational apps with any supported provider.
 
 # Quickstart
 
