@@ -4,10 +4,9 @@ This package has been updated to support multiple AI providers beyond OpenAI, in
 
 ## Event Normalization
 
-All providers emit events with a `server.` prefix to maintain consistency. The package automatically handles:
+**Provider implementations should emit events WITHOUT the `server.` prefix.**
 
-1. **Events already prefixed** (e.g., from provider normalization layers) - Used as-is
-2. **Events without prefix** (e.g., raw OpenAI events) - Automatically prefixed with `server.`
+The RealtimeAPI wrapper automatically adds the `server.` prefix to all incoming events. This keeps provider implementations simple and maintains a clean separation of concerns - providers focus on translating to the universal event format, and the wrapper handles the prefixing.
 
 ### Normalized Event Format
 
@@ -35,7 +34,7 @@ The package maintains full backward compatibility with OpenAI's Realtime API:
 For non-OpenAI providers:
 - Uses standard WebSocket connection (no special protocols)
 - No provider-specific headers
-- Events must be normalized to include `server.` prefix by the provider implementation
+- Provider emits events without `server.` prefix (wrapper adds it automatically)
 
 ## Usage with Different Providers
 
@@ -87,14 +86,14 @@ client.realtime.on('server.response.text.delta', (event) => {
 
 ## Provider Normalization Layer
 
-If you're implementing a new provider, ensure your events are normalized to include the `server.` prefix:
+If you're implementing a new provider, emit events WITHOUT the `server.` prefix:
 
 ```javascript
 // Example: Gemini provider event normalizer
 class EventNormalizer {
   normalizeAudioContent(event) {
     return {
-      type: 'server.response.audio.delta',  // Always include server. prefix
+      type: 'response.audio.delta',  // NO server. prefix - wrapper adds it
       event_id: this.generateEventId(),
       response_id: event.responseId,
       item_id: event.itemId,
@@ -103,6 +102,8 @@ class EventNormalizer {
   }
 }
 ```
+
+The RealtimeAPI wrapper will automatically convert `response.audio.delta` → `server.response.audio.delta`.
 
 ## Migration from OpenAI-specific package
 
