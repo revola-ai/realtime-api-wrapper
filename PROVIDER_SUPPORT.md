@@ -128,7 +128,7 @@ If you're migrating from `@openai/realtime-api-beta`:
 │  ┌──────────────────────────────────────────────┐      │
 │  │  RealtimeClient / RealtimeAPI                │      │
 │  │  - Receives events from WebSocket            │      │
-│  │  - Auto-prefixes with "server." if needed    │      │
+│  │  - ALWAYS adds "server." prefix              │      │
 │  │  - Dispatches to event listeners             │      │
 │  └──────────────────────────────────────────────┘      │
 └────────────────────┬────────────────────────────────────┘
@@ -144,7 +144,7 @@ If you're migrating from `@openai/realtime-api-beta`:
 │ - No prefix    │      │ ┌────────────────┐ │
 │                │      │ │ Gemini Provider│ │
 └────────────────┘      │ │ - Normalizer   │ │
-                        │ │ - Adds prefix  │ │
+                        │ │ - No prefix    │ │
                         │ └────────────────┘ │
                         │                    │
                         │ ┌────────────────┐ │
